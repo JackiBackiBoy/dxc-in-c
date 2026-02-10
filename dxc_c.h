@@ -1,7 +1,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                           //
 // dxc_c.h                                                                   //
-// C bindings for the DirectX Compiler API (DXC)                             //
+// C bindings for the DirectX Shader Compiler (DXC)                          //
 //                                                                           //
 // Copyright (c) 2026 Jack Henrikson                                         //
 //                                                                           //
