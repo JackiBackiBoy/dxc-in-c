@@ -112,6 +112,12 @@ typedef enum DXC_OUT_KIND {
     DXC_OUT_FORCE_DWORD    = 0xFFFFFFFF
 } DXC_OUT_KIND;
 
+// --- Forward Declarations ---------------------------------------------------
+// NOTE: Must include d3dcommon.h for these to be defined
+typedef struct BSTR BSTR;
+typedef struct IMalloc IMalloc;
+typedef struct IStream IStream;
+
 // --- Structs ----------------------------------------------------------------
 typedef struct DxcShaderHash { UINT32 Flags; BYTE HashDigest[16]; } DxcShaderHash;
 typedef struct DxcBuffer { LPCVOID Ptr; SIZE_T Size; UINT Encoding; } DxcBuffer;
@@ -234,6 +240,12 @@ static inline ULONG   IDxcCompiler2_AddRef(IDxcCompiler2 *self) { return COM_CAL
 static inline ULONG   IDxcCompiler2_Release(IDxcCompiler2 *self) { return COM_CALL(self, 2, ULONG(__stdcall*)(IDxcCompiler2*), self); }
 static inline HRESULT IDxcCompiler2_CompileWithDebug(IDxcCompiler2 *self, IDxcBlob *pSource, LPCWSTR pSourceName, LPCWSTR pEntryPoint, LPCWSTR pTargetProfile, LPCWSTR *pArguments, UINT32 argCount, const DxcDefine *pDefines, UINT32 defineCount, IDxcIncludeHandler *pIncludeHandler, IDxcOperationResult **ppResult, LPWSTR *ppDebugBlobName, IDxcBlob **ppDebugBlob) { return COM_CALL(self, 6, HRESULT(__stdcall*)(IDxcCompiler2*, IDxcBlob*, LPCWSTR, LPCWSTR, LPCWSTR, LPCWSTR*, UINT32, const DxcDefine*, UINT32, IDxcIncludeHandler*, IDxcOperationResult**, LPWSTR*, IDxcBlob**), self, pSource, pSourceName, pEntryPoint, pTargetProfile, pArguments, argCount, pDefines, defineCount, pIncludeHandler, ppResult, ppDebugBlobName, ppDebugBlob); }
 
+static inline HRESULT IDxcCompiler3_QueryInterface(IDxcCompiler3* self, REFIID riid, void** ppv) { return COM_CALL(self, 0, HRESULT(__stdcall*)(IDxcCompiler3*, REFIID, void**), self, riid, ppv); }
+static inline ULONG   IDxcCompiler3_AddRef(IDxcCompiler3* self) { return COM_CALL(self, 1, ULONG(__stdcall*)(IDxcCompiler3*), self); }
+static inline ULONG   IDxcCompiler3_Release(IDxcCompiler3* self) { return COM_CALL(self, 2, ULONG(__stdcall*)(IDxcCompiler3*), self); }
+static inline HRESULT IDxcCompiler3_Compile(IDxcCompiler3* self, const DxcBuffer* pSource, LPCWSTR* pArguments, UINT32 argCount, IDxcIncludeHandler* pIncludeHandler, REFIID riid, void** ppResult) { return COM_CALL(self, 3, HRESULT(__stdcall*)(IDxcCompiler3*, const DxcBuffer*, LPCWSTR*, UINT32, IDxcIncludeHandler*, REFIID, void**), self, pSource, pArguments, argCount, pIncludeHandler, riid, ppResult); }
+static inline HRESULT IDxcCompiler3_Disassemble(IDxcCompiler3* self, const DxcBuffer* pObject, REFIID riid, void** ppResult) { return COM_CALL(self, 4, HRESULT(__stdcall*)(IDxcCompiler3*, const DxcBuffer*, REFIID, void**), self, pObject, riid, ppResult); }
+
 static inline HRESULT IDxcLinker_QueryInterface(IDxcLinker *self, REFIID riid, void **ppv) { return COM_CALL(self, 0, HRESULT(__stdcall*)(IDxcLinker*, REFIID, void**), self, riid, ppv); }
 static inline ULONG   IDxcLinker_AddRef(IDxcLinker *self) { return COM_CALL(self, 1, ULONG(__stdcall*)(IDxcLinker*), self); }
 static inline ULONG   IDxcLinker_Release(IDxcLinker *self) { return COM_CALL(self, 2, ULONG(__stdcall*)(IDxcLinker*), self); }
@@ -274,12 +286,6 @@ static inline ULONG   IDxcExtraOutputs_AddRef(IDxcExtraOutputs *self) { return C
 static inline ULONG   IDxcExtraOutputs_Release(IDxcExtraOutputs *self) { return COM_CALL(self, 2, ULONG(__stdcall*)(IDxcExtraOutputs*), self); }
 static inline UINT32  IDxcExtraOutputs_GetOutputCount(IDxcExtraOutputs *self) { return COM_CALL(self, 3, UINT32(__stdcall*)(IDxcExtraOutputs*), self); }
 static inline HRESULT IDxcExtraOutputs_GetOutput(IDxcExtraOutputs *self, UINT32 uIndex, REFIID iid, void **ppvObject, IDxcBlobWide **ppOutputType, IDxcBlobWide **ppOutputName) { return COM_CALL(self, 4, HRESULT(__stdcall*)(IDxcExtraOutputs*, UINT32, REFIID, void**, IDxcBlobWide**, IDxcBlobWide**), self, uIndex, iid, ppvObject, ppOutputType, ppOutputName); }
-
-static inline HRESULT IDxcCompiler3_QueryInterface(IDxcCompiler3 *self, REFIID riid, void **ppv) { return COM_CALL(self, 0, HRESULT(__stdcall*)(IDxcCompiler3*, REFIID, void**), self, riid, ppv); }
-static inline ULONG   IDxcCompiler3_AddRef(IDxcCompiler3 *self) { return COM_CALL(self, 1, ULONG(__stdcall*)(IDxcCompiler3*), self); }
-static inline ULONG   IDxcCompiler3_Release(IDxcCompiler3 *self) { return COM_CALL(self, 2, ULONG(__stdcall*)(IDxcCompiler3*), self); }
-static inline HRESULT IDxcCompiler3_Compile(IDxcCompiler3 *self, const DxcBuffer *pSource, LPCWSTR *pArguments, UINT32 argCount, IDxcIncludeHandler *pIncludeHandler, REFIID riid, void **ppResult) { return COM_CALL(self, 3, HRESULT(__stdcall*)(IDxcCompiler3*, const DxcBuffer*, LPCWSTR*, UINT32, IDxcIncludeHandler*, REFIID, void**), self, pSource, pArguments, argCount, pIncludeHandler, riid, ppResult); }
-static inline HRESULT IDxcCompiler3_Disassemble(IDxcCompiler3 *self, const DxcBuffer *pObject, REFIID riid, void **ppResult) { return COM_CALL(self, 4, HRESULT(__stdcall*)(IDxcCompiler3*, const DxcBuffer*, REFIID, void**), self, pObject, riid, ppResult); }
 
 static inline HRESULT IDxcValidator_QueryInterface(IDxcValidator *self, REFIID riid, void **ppv) { return COM_CALL(self, 0, HRESULT(__stdcall*)(IDxcValidator*, REFIID, void**), self, riid, ppv); }
 static inline ULONG   IDxcValidator_AddRef(IDxcValidator *self) { return COM_CALL(self, 1, ULONG(__stdcall*)(IDxcValidator*), self); }
