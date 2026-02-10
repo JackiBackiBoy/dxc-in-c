@@ -4,6 +4,8 @@ C bindings for [DirectX Shader Compiler][] (DXC).
 The bindings target DXC version **1.8.2505.32**. Microsoft guarantees that COM interfaces use stable IIDs and CLSIDs across versions, meaning that the bindings remain compatible with newer DXC versions. Newer versions may
 introduce additional interfaces and types that may not be exposed by these bindings.
 
+## Requirements
+This repository only contains the `dxc_c.h` header file. You must provide the DXC binaries yourself. See official [DXC releases][].
 ## Usage
 ```c++
 #include <Windows.h>
@@ -39,3 +41,4 @@ int main(void) {
 ```
 
 [DirectX Shader Compiler]: https://github.com/microsoft/DirectXShaderCompiler
+[DXC releases]: https://github.com/microsoft/DirectXShaderCompiler/releases
