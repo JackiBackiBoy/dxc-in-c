@@ -7,7 +7,7 @@ introduce additional interfaces and types that may not be exposed by these bindi
 ## Requirements
 This repository only contains the `dxc_c.h` header file. You must provide the DXC binaries yourself. See official [DXC releases][].
 ## Usage
-```c++
+```c
 #include <Windows.h>
 #include <initguid.h> // NOTE: Required for IIDs and CLSIDs
 #include "dxc_c.h"
