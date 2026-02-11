@@ -2,6 +2,7 @@
 //                                                                           //
 // dxc_c.h                                                                   //
 // C bindings for the DirectX Shader Compiler (DXC)                          //
+// DXC version: 1.8.2505.32                                                  //
 //                                                                           //
 // Copyright (c) 2026 Jack Henrikson                                         //
 //                                                                           //
